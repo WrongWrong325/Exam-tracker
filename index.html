@@ -3,21 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Exam Record</title>
+  <title>Exam Record Tracker</title>
   <style>
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #0f0f0f;
       color: #e0e0e0;
-      padding: 30px;
+      scroll-behavior: smooth;
+    }
+
+    section {
+      padding: 50px 30px;
+    }
+
+    #home {
+      height: 100vh;
+      background: linear-gradient(135deg, #111, #222);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #home h1 {
+      font-size: 3em;
+      color: #00ff99;
+      margin-bottom: 20px;
+    }
+
+    #home p {
+      font-size: 1.2em;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    .get-started-btn {
+      margin-top: 40px;
+      padding: 16px 32px;
+      font-size: 1.2em;
+      background: #00ff99;
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.3s ease, background 0.3s;
+      box-shadow: 0 0 20px #00ff99;
+    }
+
+    .get-started-btn:hover {
+      background-color: #00cc7a;
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #00ff99;
     }
 
     h2 {
       color: #00ff99;
-    }
-
-    .subject-entry {
-      margin-bottom: 15px;
     }
 
     label {
@@ -26,17 +69,18 @@
       color: #ccc;
     }
 
-    input[type="number"] {
+    input[type="number"], input[type="text"] {
       width: 100%;
       padding: 8px;
       background-color: #1e1e1e;
       border: 1px solid #333;
       color: #fff;
       border-radius: 6px;
+      margin-bottom: 15px;
     }
 
     button {
-      margin-top: 20px;
+      margin-top: 15px;
       padding: 12px 20px;
       background-color: #00ff99;
       color: #000;
@@ -49,6 +93,10 @@
 
     button:hover {
       background-color: #00cc7a;
+    }
+
+    .subject-entry {
+      margin-bottom: 10px;
     }
 
     #records {
@@ -69,95 +117,147 @@
 </head>
 <body>
 
-  <h2>Enter Your Exam Marks</h2>
+  <!-- Homepage Section -->
+  <section id="home">
+    <h1>Welcome to the KCSE Exam Tracker</h1>
+    <p>This website helps students track their exam performance by entering marks for 8 subjects, assigning KCSE-style grades, and calculating the mean grade. All data is saved on your device and can be reviewed anytime.</p>
+    <button class="get-started-btn" onclick="document.getElementById('exam').scrollIntoView({behavior: 'smooth'})">Get Started</button>
+  </section>
 
-  <div id="form">
-    <div class="subject-entry">
-      <label for="math">Mathematics:</label>
-      <input type="number" id="math" min="0" max="100">
-    </div>
-    <div class="subject-entry">
-      <label for="english">English:</label>
-      <input type="number" id="english" min="0" max="100">
-    </div>
-    <div class="subject-entry">
-      <label for="kiswahili">Kiswahili:</label>
-      <input type="number" id="kiswahili" min="0" max="100">
-    </div>
-    <div class="subject-entry">
-      <label for="biology">Biology:</label>
-      <input type="number" id="biology" min="0" max="100">
-    </div>
-    <div class="subject-entry">
-      <label for="chemistry">Chemistry:</label>
-      <input type="number" id="chemistry" min="0" max="100">
-    </div>
-    <div class="subject-entry">
-      <label for="physics">Physics:</label>
-      <input type="number" id="physics" min="0" max="100">
-    </div>
-    <div class="subject-entry">
-      <label for="history">History:</label>
-      <input type="number" id="history" min="0" max="100">
-    </div>
-    <div class="subject-entry">
-      <label for="geography">Geography:</label>
-      <input type="number" id="geography" min="0" max="100">
+  <!-- Exam Section -->
+  <section id="exam">
+    <h2>Enter Your Exam Details</h2>
+
+    <label for="examDescription">Exam Description:</label>
+    <input type="text" id="examDescription" placeholder="e.g. Midterm 2025">
+
+    <div id="form">
+      <div class="subject-entry">
+        <label for="math">Mathematics:</label>
+        <input type="number" id="math" min="0" max="100">
+      </div>
+      <div class="subject-entry">
+        <label for="english">English:</label>
+        <input type="number" id="english" min="0" max="100">
+      </div>
+      <div class="subject-entry">
+        <label for="kiswahili">Kiswahili:</label>
+        <input type="number" id="kiswahili" min="0" max="100">
+      </div>
+      <div class="subject-entry">
+        <label for="biology">Biology:</label>
+        <input type="number" id="biology" min="0" max="100">
+      </div>
+      <div class="subject-entry">
+        <label for="chemistry">Chemistry:</label>
+        <input type="number" id="chemistry" min="0" max="100">
+      </div>
+      <div class="subject-entry">
+        <label for="physics">Physics:</label>
+        <input type="number" id="physics" min="0" max="100">
+      </div>
+      <div class="subject-entry">
+        <label for="history">History:</label>
+        <input type="number" id="history" min="0" max="100">
+      </div>
+      <div class="subject-entry">
+        <label for="geography">Geography:</label>
+        <input type="number" id="geography" min="0" max="100">
+      </div>
+
+      <button onclick="saveExam()">Save Exam</button>
+      <button onclick="showRecords()">View Saved Records</button>
+      <button onclick="clearRecords()">Clear All Records</button>
     </div>
 
-    <button onclick="saveExam()">Save Exam</button>
-    <button onclick="showRecords()">View Saved Records</button>
-  </div>
-
-  <div id="records"></div>
+    <div id="records"></div>
+  </section>
 
   <script>
-    function getGrade(mark) {
-      if (mark >= 80) return 'A';
-      if (mark >= 70) return 'B';
-      if (mark >= 60) return 'C';
-      if (mark >= 50) return 'D';
-      return 'E';
+    function getKCSEGrade(mark) {
+      if (mark >= 81) return "A";
+      if (mark >= 75) return "A−";
+      if (mark >= 70) return "B+";
+      if (mark >= 65) return "B";
+      if (mark >= 60) return "B−";
+      if (mark >= 55) return "C+";
+      if (mark >= 50) return "C";
+      if (mark >= 45) return "C−";
+      if (mark >= 40) return "D+";
+      if (mark >= 35) return "D";
+      if (mark >= 30) return "D−";
+      return "E";
+    }
+
+    function gradeToPoints(grade) {
+      const scale = {
+        "A": 12, "A−": 11, "B+": 10, "B": 9, "B−": 8,
+        "C+": 7, "C": 6, "C−": 5, "D+": 4, "D": 3,
+        "D−": 2, "E": 1
+      };
+      return scale[grade] || 0;
+    }
+
+    function pointsToMean(points) {
+      const mean = Math.round(points);
+      for (let grade in {
+        "A":12, "A−":11, "B+":10, "B":9, "B−":8, "C+":7, "C":6,
+        "C−":5, "D+":4, "D":3, "D−":2, "E":1
+      }) {
+        if (gradeToPoints(grade) === mean) return grade;
+      }
+      return "E";
     }
 
     function saveExam() {
+      const examDescription = document.getElementById("examDescription").value.trim();
+      if (!examDescription) {
+        alert("Please enter a description for the exam.");
+        return;
+      }
+
       const subjects = ['math', 'english', 'kiswahili', 'biology', 'chemistry', 'physics', 'history', 'geography'];
       const subjectNames = {
-        math: "Mathematics",
-        english: "English",
-        kiswahili: "Kiswahili",
-        biology: "Biology",
-        chemistry: "Chemistry",
-        physics: "Physics",
-        history: "History",
-        geography: "Geography"
+        math: "Mathematics", english: "English", kiswahili: "Kiswahili", biology: "Biology",
+        chemistry: "Chemistry", physics: "Physics", history: "History", geography: "Geography"
       };
 
       let exam = [];
+      let totalPoints = 0;
+
       for (let id of subjects) {
         const value = parseInt(document.getElementById(id).value);
         if (isNaN(value) || value < 0 || value > 100) {
           alert(`Enter a valid mark (0-100) for ${subjectNames[id]}`);
           return;
         }
+        const grade = getKCSEGrade(value);
+        const points = gradeToPoints(grade);
+        totalPoints += points;
+
         exam.push({
           subject: subjectNames[id],
           mark: value,
-          grade: getGrade(value)
+          grade: grade
         });
       }
 
-      if (exam.length !== 8) {
-        alert("You must enter marks for all 8 subjects.");
-        return;
-      }
+      const meanPoints = totalPoints / 8;
+      const meanGrade = pointsToMean(meanPoints);
+
+      const record = {
+        description: examDescription,
+        date: new Date().toLocaleString(),
+        subjects: exam,
+        meanGrade: meanGrade
+      };
 
       let allRecords = JSON.parse(localStorage.getItem("examRecords")) || [];
-      allRecords.push(exam);
+      allRecords.push(record);
       localStorage.setItem("examRecords", JSON.stringify(allRecords));
 
       alert("Exam saved successfully!");
-      // Optionally clear input fields
+      document.getElementById("examDescription").value = "";
       subjects.forEach(id => document.getElementById(id).value = "");
     }
 
@@ -171,15 +271,22 @@
       }
 
       let html = `<h3>Saved Exam Records (${allRecords.length}):</h3>`;
-      allRecords.forEach((exam, index) => {
-        html += `<p><strong>Exam ${index + 1}</strong></p><ul>`;
-        exam.forEach(record => {
-          html += `<li>${record.subject}: ${record.mark} — Grade: ${record.grade}</li>`;
+      allRecords.forEach((record, index) => {
+        html += `<p><strong>${index + 1}. ${record.description} — ${record.date} (Mean Grade: ${record.meanGrade})</strong></p><ul>`;
+        record.subjects.forEach(sub => {
+          html += `<li>${sub.subject}: ${sub.mark} — Grade: ${sub.grade}</li>`;
         });
         html += "</ul>";
       });
 
       recordsDiv.innerHTML = html;
+    }
+
+    function clearRecords() {
+      if (confirm("Are you sure you want to delete all saved records?")) {
+        localStorage.removeItem("examRecords");
+        document.getElementById("records").innerHTML = "<p>All records deleted.</p>";
+      }
     }
   </script>
 </body>
